@@ -132,13 +132,23 @@
     <ClInclude Include="stdcpp.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="barber_shop.cpp" />
     <ClCompile Include="barrier.cpp" />
+    <ClCompile Include="blocking_queue.cpp" />
     <ClCompile Include="delay_queue.cpp" />
-    <ClCompile Include="light_switch.h" />
+    <ClCompile Include="dining_philosophers.cpp" />
+    <ClCompile Include="future.cpp" />
+    <ClCompile Include="light_switch.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="no_starve_mutex.cpp" />
     <ClCompile Include="ordered_lock.cpp" />
+    <ClCompile Include="promise.cpp" />
     <ClCompile Include="rate_limiter.cpp" />
     <ClCompile Include="read_write_lock.cpp" />
     <ClCompile Include="semaphore.cpp" />
+    <ClCompile Include="singleton.cpp" />
+    <ClCompile Include="threadpool.cpp" />
+    <ClCompile Include="uber_ride.cpp" />
     <ClCompile Include="unisex_bathroom.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

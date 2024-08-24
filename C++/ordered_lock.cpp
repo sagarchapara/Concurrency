@@ -19,24 +19,24 @@ public:
 	void lock() {
 		unique_lock<mutex> lock(q_lock);
 
-		if (is_locked) {
+		if (!is_locked) {
+			is_locked = true;
+		}
+		else {
 			condition_variable cv;
 
-			q.emplace(&cv);
+			q.push(&cv);
 
 			cv.wait(lock);
 
 			q.pop();
 		}
-		else {
-			is_locked = true;
-		}
 	}
 
 	void unlock() {
-		unique_lock<mutex> lock(q_lock);
+		lock_guard<mutex> lock(q_lock);
 
-		if (q.empty()) {
+		if (is_locked) {
 			is_locked = false;
 		}
 		else {

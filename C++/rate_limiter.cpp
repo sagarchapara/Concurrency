@@ -7,37 +7,41 @@ using namespace std::chrono;
 
 class rate_limiter
 {
-	int tokens;
+	int tokens, max_tokens;
 	mutex mtx;
 	condition_variable cv;
-	int max_tokens;
-	bool is_running;
 	thread worker_thread;
+	bool is_running;
 
 public:
-
-	rate_limiter(int _max_tokens) : max_tokens(_max_tokens), tokens(_max_tokens), is_running(true) {
-
-		worker_thread = thread([this] {
+	rate_limiter(int _max_tokens): max_tokens(_max_tokens), tokens(_max_tokens), is_running(true) {
+		worker_thread = thread([&] {
 			while (is_running) {
+				bool should_notify = false;
+
 				{
-					unique_lock<mutex> lock(mtx);
+					lock_guard<mutex> lock(mtx);
 
 					if (tokens < max_tokens) {
 						tokens++;
+						should_notify = true;
 					}
 				}
 
-				cv.notify_one();
+				if (should_notify) {
+					cv.notify_one();
+				}
 
-				std::this_thread::sleep_for(seconds(1));
+				//sleep
+				this_thread::sleep_for(seconds(1));
 			}
-			});
+		});
 	}
 
 	~rate_limiter() {
 		{
-			unique_lock<mutex> lock(mtx);
+			lock_guard<mutex> lock(mtx);
+
 			is_running = false;
 		}
 
@@ -48,18 +52,16 @@ public:
 		}
 	}
 
-	void getToken() {
-		unique_lock<mutex> lock(mtx);
+	void acquire() {
 
-		while (tokens == 0 && is_running) {
-			cv.wait(lock, [&] {return tokens > 0 || !is_running; });
+		{
+			unique_lock<mutex> lock(mtx);
+
+			cv.wait(lock, [&] {return tokens > 0; });
+
+			tokens--;
 		}
-
-		if (!is_running) return;
-
-		tokens--;
-
-		return;
 	}
+
 };
 

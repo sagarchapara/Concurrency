@@ -65,6 +65,7 @@
 #include <atomic>
 #include <future>
 #include <semaphore>
+#include <functional>
 
 // C compatibility headers
 #include <cctype>

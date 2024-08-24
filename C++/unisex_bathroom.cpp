@@ -1,5 +1,5 @@
 #include "stdcpp.h"
-#include "light_switch.h"
+#include "light_switch.cpp"
 
 using namespace std;
 

@@ -12,7 +12,7 @@ public:
 
 	semaphore(int init_count, int size) : count(init_count), capacity(size){}
 
-	void wait() {
+	void acquire() {
 		{
 			unique_lock<mutex> lock(mtx);
 
@@ -20,9 +20,13 @@ public:
 
 			count--;
 		}
+
+		//we can use notify_one, however notify_one will not work in single producer, multiple consumers problems
+		//i.e, a release thread can notify another release thread, not a acquire thread, which can block a acquire thread indefinetely
+		cv.notify_all();
 	}
 
-	void signal() {
+	void release() {
 		{
 			unique_lock<mutex> lock(mtx);
 
@@ -31,6 +35,6 @@ public:
 			count++;
 		}
 
-		cv.notify_one();
+		cv.notify_all();
 	}
 };

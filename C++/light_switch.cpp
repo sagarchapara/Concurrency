@@ -11,7 +11,7 @@ class light_switch {
 
 public:
 	void lock(binary_semaphore& semaphore) {
-		unique_lock<mutex> lock(mtx);
+		lock_guard<mutex> lock(mtx);
 
 		counter++;
 
@@ -21,7 +21,7 @@ public:
 	}
 
 	void unlock(binary_semaphore& semaphore) {
-		unique_lock<mutex> lock(mtx);
+		lock_guard<mutex> lock(mtx);
 
 		counter--;
 
