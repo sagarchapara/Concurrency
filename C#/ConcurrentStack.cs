@@ -23,7 +23,7 @@
 
             next.Next = Head;
 
-            if (Interlocked.CompareExchange(ref Head, next, next.Next) != next.Next)
+            if (Interlocked.CompareExchange(ref Head, next, next.Next) == next.Next)
             {
                 return;
             }
@@ -56,7 +56,7 @@
                 return false;
             }
 
-            if (Interlocked.CompareExchange(ref Head, m_val.Next, m_val) != m_val)
+            if (Interlocked.CompareExchange(ref Head, m_val.Next, m_val) == m_val)
             {
                 value = m_val.Value;
                 return true;

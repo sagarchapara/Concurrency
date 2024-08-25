@@ -135,9 +135,14 @@
     <ClCompile Include="barber_shop.cpp" />
     <ClCompile Include="barrier.cpp" />
     <ClCompile Include="blocking_queue.cpp" />
+    <ClCompile Include="concurrent_priority_queue.cpp" />
+    <ClCompile Include="concurrent_queue.cpp" />
+    <ClCompile Include="concurrent_stack.cpp" />
+    <ClCompile Include="concurrent_unordered_map.cpp" />
     <ClCompile Include="delay_queue.cpp" />
     <ClCompile Include="dining_philosophers.cpp" />
     <ClCompile Include="future.cpp" />
+    <ClCompile Include="kvsnapshot.cpp" />
     <ClCompile Include="light_switch.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="no_starve_mutex.cpp" />

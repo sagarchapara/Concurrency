@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\concurrent_data_structures">
+      <UniqueIdentifier>{15732bf2-aef0-4eaa-a373-83b813d050c8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdcpp.h">
@@ -72,6 +75,21 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="promise.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="concurrent_unordered_map.cpp">
+      <Filter>Source Files\concurrent_data_structures</Filter>
+    </ClCompile>
+    <ClCompile Include="concurrent_stack.cpp">
+      <Filter>Source Files\concurrent_data_structures</Filter>
+    </ClCompile>
+    <ClCompile Include="concurrent_queue.cpp">
+      <Filter>Source Files\concurrent_data_structures</Filter>
+    </ClCompile>
+    <ClCompile Include="concurrent_priority_queue.cpp">
+      <Filter>Source Files\concurrent_data_structures</Filter>
+    </ClCompile>
+    <ClCompile Include="kvsnapshot.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

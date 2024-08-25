@@ -1,33 +1,43 @@
-#include "future.cpp"
+#include "kvsnapshot.cpp"
+#include "stdcpp.h"
+
+using namespace std;
 
 int main() {
 
-	future_thread_pool t(100);
+	kv_snapshot_map<int, long> map;
 
-	vector<unique_ptr<future<string>>> futures;
+	vector<thread> threads;
 
-	for (int i = 0; i < 1000; i++) {
+	auto start = std::chrono::system_clock::now();
 
-		auto unqptr = make_unique<future<string>>(t.execute([i] {
-			//cout << sqrt(i) << endl;
+	atomic<int> num_snapshots = 0;
 
-			cout << this_thread::get_id() << endl;
+	for (int i = 0; i < 12; i++) {
+		threads.emplace_back([&] {
+			for (int i = 0; i < 1000000; i++) {
+				map.put(rand(), rand());
 
-			this_thread::sleep_for(chrono::milliseconds(1000));
+				if(num_snapshots.load() < 0 && rand() % 100000 == 50){
+					num_snapshots.fetch_add(1);
 
-			string ans = "Sagar is GOAT " + to_string(i);
-
-			return ans;
-		}));
-
-		futures.push_back(move(unqptr));
+					map.take_snapshot();
+				}
+			}
+		});
 	}
 
-	for (auto& f : futures) {
-		cout << f->get() << endl;
+	map.take_snapshot();
+
+	for (auto& t : threads) {
+		t.join();
 	}
 
-	this_thread::sleep_for(chrono::seconds(20));
+	auto finish = std::chrono::system_clock::now();
+
+	auto duration = chrono::duration_cast<chrono::milliseconds>(finish - start);
+
+	cout << duration << endl;
 
 	return 0;
 }

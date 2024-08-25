@@ -66,6 +66,7 @@
 #include <future>
 #include <semaphore>
 #include <functional>
+#include <shared_mutex>
 
 // C compatibility headers
 #include <cctype>
